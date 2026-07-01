@@ -1,0 +1,196 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   GLOBAL STYLES — Clinical Sanctuary Design System
+   Règle fondamentale : ZÉRO bordure de séparation (No-Line Rule).
+   La hiérarchie visuelle est créée exclusivement par le tonal layering,
+   les ombres ambiantes et les espaces négatifs généreux.
+═══════════════════════════════════════════════════════════════════════════ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── 1. BASE — Réinitialisation et fondations ──────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply font-body text-on-surface bg-surface-lowest;
+    font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  }
+
+  /* Titres — toujours en Manrope pour l'autorité éditoriale */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-on-surface;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+  }
+
+  /* Sélection de texte — teinté primaire, non agressif */
+  ::selection {
+    background-color: rgba(21, 145, 155, 0.15);
+    color: #181c1d;
+  }
+
+  /* Focus visible — glow primaire doux, jamais d'outline brutal */
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(21, 145, 155, 0.22);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Scrollbar personnalisée (navigateurs Chromium) */
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: #f1f4f5; }
+  ::-webkit-scrollbar-thumb  {
+    background: rgba(21, 145, 155, 0.35);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(21, 145, 155, 0.65); }
+}
+
+/* ─── 2. COMPOSANTS — Classes réutilisables du design system ────────────── */
+@layer components {
+
+  /* ── Conteneurs éditoriaux ── */
+  .container-editorial {
+    @apply w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16;
+  }
+  .container-content {
+    @apply w-full max-w-[1200px] mx-auto px-4 sm:px-8 lg:px-16;
+  }
+
+  /* ── Bouton CTA principal (gradient 135°) ── */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2
+           bg-cta-gradient text-white
+           font-display font-semibold text-sm tracking-wide
+           px-6 py-3.5 rounded-xl
+           shadow-cta
+           transition-all duration-250 ease-clinical
+           hover:shadow-cta-hover hover:scale-[1.02]
+           active:scale-[0.98]
+           focus-visible:shadow-focus;
+  }
+
+  /* ── Bouton secondaire (tonal doux) ── */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2
+           text-primary-alt
+           font-display font-semibold text-sm tracking-wide
+           px-6 py-3.5 rounded-xl
+           transition-all duration-250 ease-clinical
+           hover:scale-[1.02]
+           active:scale-[0.98];
+    background-color: rgba(173, 216, 220, 0.28);
+  }
+  .btn-secondary:hover {
+    background-color: rgba(173, 216, 220, 0.48);
+  }
+
+  /* ── Carte standard (Level 2 Float) ── */
+  .card {
+    @apply bg-surface-lowest rounded-card shadow-card
+           transition-all duration-350 ease-clinical;
+  }
+  .card-hover:hover {
+    @apply shadow-level-3 -translate-y-1;
+  }
+
+  /* ── Chip / Tag de section ── */
+  .chip-primary {
+    @apply inline-flex items-center gap-2
+           font-body font-semibold text-label-sm uppercase tracking-widest
+           px-3 py-1.5 rounded-xl;
+    background-color: rgba(21, 145, 155, 0.10);
+    color: #15919B;
+  }
+  .chip-accent {
+    @apply inline-flex items-center gap-2
+           font-body font-semibold text-label-sm uppercase tracking-widest
+           px-3 py-1.5 rounded-xl;
+    background-color: rgba(141, 74, 26, 0.10);
+    color: #8d4a1a;
+  }
+
+  /* ── Input "Quiet Entry" (fond tonal, zéro bordure) ── */
+  .input-quiet {
+    @apply w-full bg-surface-tonal rounded-xl
+           px-4 py-3.5 text-body-md text-on-surface
+           transition-all duration-250 ease-clinical
+           focus:outline-none focus:shadow-focus focus:bg-surface-tonal;
+    border: none;
+    appearance: none;
+  }
+  .input-quiet::placeholder {
+    color: #6d797a;
+  }
+
+  /* ── Label input (uppercase petit, au-dessus du champ) ── */
+  .input-label {
+    @apply block font-body font-semibold text-label-sm uppercase
+           tracking-widest text-on-surface-variant mb-2;
+  }
+
+  /* ── Padding de section standard ── */
+  .section-padding {
+    @apply py-20 lg:py-28;
+  }
+
+  /* ── Section avec fond tonal (surface-tonal = #F4F9F9) ── */
+  .section-tonal {
+    @apply bg-surface-tonal;
+  }
+}
+
+/* ─── 3. UTILITAIRES — Extensions ponctuelles ───────────────────────────── */
+@layer utilities {
+
+  /* Délais d'animation pour les grilles en cascade */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-150 { animation-delay: 150ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+  .animation-delay-600 { animation-delay: 600ms; }
+
+  /* Conteneur d'image anti-CLS (ratio explicite) */
+  .img-aspect-hero {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  /* État révélé par IntersectionObserver */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

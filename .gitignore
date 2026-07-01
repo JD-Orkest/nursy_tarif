@@ -1,0 +1,45 @@
+# Dépendances
+node_modules/
+.pnp
+.pnp.js
+
+# Build / output Nuxt
+.output/
+.nuxt/
+dist/
+dist
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Variables d'environnement — NE JAMAIS commiter les secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Système d'exploitation
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V8
+.Trashes
+Thumbs.db
+
+# Éditeurs
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# TypeScript
+*.tsbuildinfo
+
+# Nuxt DevTools
+.nuxt/devtools/

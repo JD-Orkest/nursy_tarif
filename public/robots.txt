@@ -1,0 +1,13 @@
+# NursyTarif — Directives de crawl pour les robots d'indexation
+# Soumettez ce fichier dans Google Search Console et Bing Webmaster Tools.
+
+User-agent: *
+Allow: /
+
+# Blocage des ressources inutiles à l'indexation (améliore le crawl budget)
+Disallow: /_nuxt/
+Disallow: /api/
+Disallow: /.nuxt/
+
+# Sitemap — permet aux moteurs de découvrir toutes les URLs
+Sitemap: https://nursytarif.be/sitemap.xml
