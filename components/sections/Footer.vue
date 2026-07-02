@@ -6,6 +6,9 @@
 
 const currentYear = new Date().getFullYear()
 
+// URL du logo préfixée avec le baseURL (nécessaire pour GitHub Pages)
+const logoUrl = usePublicUrl('logo.svg')
+
 const footerLinks = [
   { label: 'Contact',                       href: '#contact'  },
 ]
@@ -31,7 +34,7 @@ const scrollToContact = () => {
         <!-- ── Logo et signature ── -->
         <div class="flex items-center gap-2">
           <img
-            src="/logo.svg"
+            :src="logoUrl"
             alt="NursyTarif logo"
             class="w-7 h-7 rounded-lg"
             width="28"

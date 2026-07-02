@@ -22,8 +22,12 @@ export default defineNuxtConfig({
     prefetch: false,
   },
 
-  // ─── En-tête HTML global ─────────────────────────────────────────────────
+  // ─── Application ─────────────────────────────────────────────────────────
+  // baseURL : '/' en développement, '/nursy_tarif/' sur GitHub Pages
+  // La variable NUXT_APP_BASE_URL est injectée par le workflow CI/CD.
   app: {
+    baseURL: (process.env.NUXT_APP_BASE_URL ?? '/') as string,
+
     head: {
       htmlAttrs: {
         lang: 'fr-BE',
@@ -34,28 +38,23 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#15919B' },
         { name: 'format-detection', content: 'telephone=no' },
         { name: 'robots', content: 'index, follow' },
-        // Open Graph — les valeurs spécifiques sont définies dans pages/index.vue
         { property: 'og:type', content: 'website' },
         { property: 'og:locale', content: 'fr_BE' },
         { property: 'og:site_name', content: 'NursyTarif' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [
-        // Favicon SVG — affiché dans l'onglet du navigateur
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'canonical', href: 'https://nursytarif.be' },
-        // Déclaration du sitemap dans le <head> (découverte par les robots)
         { rel: 'sitemap', type: 'application/xml', href: 'https://nursytarif.be/sitemap.xml' },
-        // hreflang pour le ciblage linguistique fr-BE
         { rel: 'alternate', hreflang: 'fr-BE', href: 'https://nursytarif.be/' },
       ],
     },
   },
 
-  // ─── Génération statique (SSG) — Netlify / Vercel / Cloudflare Pages ─────
+  // ─── Génération statique (SSG) ───────────────────────────────────────────
   nitro: {
     prerender: {
-      // Prérendu de toutes les pages de ville + sitemap pour un déploiement 100% statique
       routes: ['/', '/sitemap.xml', ...cityRoutes],
       crawlLinks: true,
     },
@@ -76,6 +75,5 @@ export default defineNuxtConfig({
     },
   },
 
-  // Mode SSR activé (compatible avec nuxt generate)
   ssr: true,
 })

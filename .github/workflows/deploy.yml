@@ -1,0 +1,72 @@
+# ╔══════════════════════════════════════════════════════════════════════════╗
+# ║  NursyTarif — Déploiement automatique sur GitHub Pages                  ║
+# ║  Déclenché sur chaque push sur la branche main                          ║
+# ║  URL de production : https://jd-orkest.github.io/nursy_tarif            ║
+# ╚══════════════════════════════════════════════════════════════════════════╝
+
+name: 🚀 Déploiement GitHub Pages
+
+on:
+  # Déploiement automatique à chaque push sur main
+  push:
+    branches: [main]
+  # Déploiement manuel depuis l'interface GitHub (onglet Actions)
+  workflow_dispatch:
+
+# Permissions nécessaires pour l'action deploy-pages
+permissions:
+  contents: read
+  pages:    write
+  id-token: write
+
+# Un seul déploiement à la fois — évite les conflits
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  # ── Job 1 : Build ──────────────────────────────────────────────────────
+  build:
+    name: Build Nuxt SSG
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js 20 LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 📦 Installer les dépendances
+        run: npm ci
+
+      # nuxt generate produit le site statique dans .output/public/
+      # NUXT_APP_BASE_URL est obligatoire pour le sous-répertoire /nursy_tarif/
+      - name: 🏗️ Générer le site statique
+        run: npm run generate
+        env:
+          NUXT_APP_BASE_URL: /nursy_tarif/
+
+      # Upload l'artifact pour l'action deploy-pages
+      - name: 📤 Upload de l'artifact GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .output/public
+
+  # ── Job 2 : Deploy ─────────────────────────────────────────────────────
+  deploy:
+    name: Deploy sur GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 🌐 Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

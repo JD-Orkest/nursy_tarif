@@ -13,7 +13,8 @@ const isCityPage = computed(() => route.path.startsWith('/tarification/'))
 
 const isScrolled       = ref(false)
 const isMobileMenuOpen = ref(false)
-
+// URL du logo préfixée avec le baseURL (nécessaire pour GitHub Pages)
+const logoUrl = usePublicUrl('logo.svg')
 // Liens adaptés au contexte
 const homeLinks = [
   { label: 'Tarifs',          href: '#services'   },
@@ -74,7 +75,7 @@ const scrollTo = (href: string) => {
           @click="!isCityPage ? ($event.preventDefault(), scrollTo('#accueil')) : undefined"
         >
           <img
-            src="/logo.svg"
+            :src="logoUrl"
             alt="NursyTarif logo"
             class="w-8 h-8 rounded-lg shadow-level-1 group-hover:shadow-level-2 transition-shadow duration-250"
             width="32" height="32" loading="eager"
