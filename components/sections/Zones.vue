@@ -136,7 +136,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
         SEO — Liste cachée visuellement mais indexée par Google.
         Contient tous les noms de communes avec leurs liens internes.
       -->
-      <div class="sr-only" aria-hidden="true">
+      <!-- Liste sr-only : visuellement masquée mais accessible et indexable par Google (pas de cloaking) -->
+      <div class="sr-only">
         <template v-for="province in provinceOrder" :key="province">
           <h3>{{ province }}</h3>
           <ul>

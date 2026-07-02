@@ -1,50 +1,49 @@
 <script setup lang="ts">
 /**
- * NavBar — En-tête sticky avec effet de profondeur au défilement.
- * - Transparent au sommet → fond blanc + ombre au scroll
- * - Menu mobile avec animation slide-down
- * - Liens avec défilement doux vers les ancres de section
+ * NavBar contextuelle :
+ *   - Homepage /          : ancres #section + scroll doux
+ *   - Pages ville /tarification/* : liens /#section (navigation pleine page)
+ *                                   logo = lien retour /
+ *                                   fil d’ariane en centre
  */
+const route = useRoute()
 
-// État du défilement (pour l'effet d'élévation)
-const isScrolled = ref(false)
-// État du menu mobile
+// Vrai sur toute URL commençant par /tarification/
+const isCityPage = computed(() => route.path.startsWith('/tarification/'))
+
+const isScrolled       = ref(false)
 const isMobileMenuOpen = ref(false)
 
-// Liens de navigation (correspond aux id des sections)
-const navLinks = [
-  { label: 'Tarifs',          href: '#services'    },
-  { label: 'Fonctionnalités', href: '#avantages'   },
-  { label: 'SEO Offert',      href: '#visibilite'  },
-  { label: 'Contact',         href: '#contact'     },
+// Liens adaptés au contexte
+const homeLinks = [
+  { label: 'Tarifs',          href: '#services'   },
+  { label: 'Fonctionnalités', href: '#avantages'  },
+  { label: 'SEO Offert',      href: '#visibilite' },
+  { label: 'Contact',         href: '#contact'    },
 ]
+const cityLinks = [
+  { label: 'Tarifs',          href: '/#services'   },
+  { label: 'Fonctionnalités', href: '/#avantages'  },
+  { label: 'SEO Offert',      href: '/#visibilite' },
+  { label: 'Contact',         href: '/#contact'    },
+]
+const navLinks = computed(() => isCityPage.value ? cityLinks : homeLinks)
 
-// Gestion du défilement pour l'élévation du header
-const handleScroll = () => {
-  isScrolled.value = window.scrollY > 24
-}
+// Nom de la ville depuis le slug (pour le fil d’ariane)
+const cityLabel = computed(() =>
+  (route.params.ville as string ?? '').replace(/-/g, ' '),
+)
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll, { passive: true })
-})
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
+const handleScroll = () => { isScrolled.value = window.scrollY > 24 }
+onMounted(()  => window.addEventListener('scroll', handleScroll, { passive: true }))
+onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 
-// Défilement doux vers une ancre de section
+// Scroll doux uniquement sur la homepage
 const scrollTo = (href: string) => {
   isMobileMenuOpen.value = false
   if (href.startsWith('#')) {
-    const target = document.querySelector(href)
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
-}
-
-// Fermeture du menu mobile au clic extérieur
-const closeMenu = () => {
-  isMobileMenuOpen.value = false
 }
 </script>
 
@@ -67,60 +66,85 @@ const closeMenu = () => {
     >
       <div class="flex items-center justify-between h-16 lg:h-18">
 
-        <!-- ── Logo NursyTarif ── -->
+        <!-- ── Logo — scroll doux (homepage) | lien retour à / (pages ville) ── -->
         <a
-          href="#accueil"
+          :href="isCityPage ? '/' : '#accueil'"
           class="flex items-center gap-2 group"
-          @click.prevent="scrollTo('#accueil')"
-          aria-label="NursyTarif — Retour à l'accueil"
+          :aria-label="isCityPage ? 'NursyTarif — Retour à l\'accueil' : 'NursyTarif — Haut de page'"
+          @click="!isCityPage ? ($event.preventDefault(), scrollTo('#accueil')) : undefined"
         >
-          <!-- Icône croix médicale stylisée -->
-          <div
-            class="w-8 h-8 rounded-lg bg-cta-gradient flex items-center justify-center shadow-level-1
-                   group-hover:shadow-level-2 transition-shadow duration-250"
-          >
-            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M11 3a1 1 0 10-2 0v4H5a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V3z" />
-            </svg>
-          </div>
-          <span class="font-display font-bold text-lg text-on-surface tracking-tight">
-            NursyTarif
-          </span>
+          <img
+            src="/logo.svg"
+            alt="NursyTarif logo"
+            class="w-8 h-8 rounded-lg shadow-level-1 group-hover:shadow-level-2 transition-shadow duration-250"
+            width="32" height="32" loading="eager"
+          />
+          <span class="font-display font-bold text-lg text-on-surface tracking-tight">NursyTarif</span>
         </a>
 
-        <!-- ── Liens de navigation — desktop uniquement ── -->
-        <ul class="hidden lg:flex items-center gap-1" role="list">
+        <!-- ── Fil d’ariane — visible uniquement sur les pages ville (desktop) ── -->
+        <nav
+          v-if="isCityPage"
+          aria-label="Fil d’ariane"
+          class="hidden md:flex items-center gap-1.5 font-body text-body-sm text-on-surface-variant"
+        >
+          <a href="/" class="hover:text-primary transition-colors duration-150">Accueil</a>
+          <svg class="w-3 h-3 text-outline-variant flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+          <a href="/#zones" class="hover:text-primary transition-colors duration-150">Zones</a>
+          <svg class="w-3 h-3 text-outline-variant flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+          <span class="text-on-surface font-medium capitalize">{{ cityLabel }}</span>
+        </nav>
+
+        <!-- ── Liens nav desktop ── -->
+        <!-- Homepage : @click.prevent + scroll doux | Pages ville : lien href natif vers /#section -->
+        <ul v-if="!isCityPage" class="hidden lg:flex items-center gap-1" role="list">
           <li v-for="link in navLinks" :key="link.href">
             <a
               :href="link.href"
               class="font-body text-body-sm text-on-surface-variant px-4 py-2 rounded-xl
-                     hover:text-on-surface hover:bg-surface-low
-                     transition-all duration-150 ease-clinical"
+                     hover:text-on-surface hover:bg-surface-low transition-all duration-150"
               @click.prevent="scrollTo(link.href)"
             >
               {{ link.label }}
             </a>
           </li>
         </ul>
+        <ul v-else class="hidden lg:flex items-center gap-1" role="list">
+          <li v-for="link in navLinks" :key="link.href">
+            <a
+              :href="link.href"
+              class="font-body text-body-sm text-on-surface-variant px-4 py-2 rounded-xl
+                     hover:text-on-surface hover:bg-surface-low transition-all duration-150"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        </ul>
 
-        <!-- ── Actions CTA — desktop ── -->
+        <!-- ── CTA desktop ── -->
         <div class="hidden lg:flex items-center gap-3">
-          <a
+          <UiButton
+            v-if="isCityPage"
             href="#contact"
-            class="font-body font-semibold text-sm text-on-surface-variant
-                   px-4 py-2 rounded-xl
-                   hover:text-primary hover:bg-primary/5
-                   transition-all duration-150"
+            size="sm"
+          >
+            Démarrer
+          </UiButton>
+          <UiButton
+            v-else
+            href="#contact"
+            size="sm"
             @click.prevent="scrollTo('#contact')"
           >
-            Connexion
-          </a>
-          <UiButton href="#contact" size="sm" @click.prevent="scrollTo('#contact')">
             Démarrer
           </UiButton>
         </div>
 
-        <!-- ── Bouton hamburger — mobile ── -->
+        <!-- ── Hamburger mobile ── -->
         <button
           class="lg:hidden flex flex-col justify-center items-center w-10 h-10 rounded-xl
                  hover:bg-surface-low transition-colors duration-150 gap-1.5"
@@ -129,22 +153,13 @@ const closeMenu = () => {
           aria-label="Ouvrir le menu de navigation"
           @click="isMobileMenuOpen = !isMobileMenuOpen"
         >
-          <span
-            :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250',
-                     isMobileMenuOpen && 'rotate-45 translate-y-2']"
-          />
-          <span
-            :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250',
-                     isMobileMenuOpen && 'opacity-0']"
-          />
-          <span
-            :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250',
-                     isMobileMenuOpen && '-rotate-45 -translate-y-2']"
-          />
+          <span :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250', isMobileMenuOpen && 'rotate-45 translate-y-2']" />
+          <span :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250', isMobileMenuOpen && 'opacity-0']" />
+          <span :class="['block w-5 h-0.5 bg-on-surface rounded-full transition-all duration-250', isMobileMenuOpen && '-rotate-45 -translate-y-2']" />
         </button>
       </div>
 
-      <!-- ── Menu mobile déroulant ── -->
+      <!-- ── Menu mobile ── -->
       <Transition
         enter-active-class="transition-all duration-300 ease-clinical"
         enter-from-class="opacity-0 -translate-y-2"
@@ -153,30 +168,38 @@ const closeMenu = () => {
         leave-from-class="opacity-100 translate-y-0"
         leave-to-class="opacity-0 -translate-y-2"
       >
-        <div
-          v-if="isMobileMenuOpen"
-          id="mobile-menu"
-          class="lg:hidden pb-6 pt-2"
-        >
+        <div v-if="isMobileMenuOpen" id="mobile-menu" class="lg:hidden pb-6 pt-2">
+
+          <!-- Fil d’ariane mobile -->
+          <div
+            v-if="isCityPage"
+            class="flex items-center gap-1.5 px-4 py-2 mb-1 font-body text-body-sm text-on-surface-variant"
+          >
+            <a href="/" class="hover:text-primary transition-colors">Accueil</a>
+            <svg class="w-3 h-3 text-outline-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+            <span class="text-on-surface font-medium capitalize">{{ cityLabel }}</span>
+          </div>
+
           <ul class="flex flex-col gap-1" role="list">
             <li v-for="link in navLinks" :key="link.href">
               <a
                 :href="link.href"
-                class="block font-body text-body-md text-on-surface-variant
-                       px-4 py-3 rounded-xl
-                       hover:text-on-surface hover:bg-surface-low
-                       transition-all duration-150"
-                @click.prevent="scrollTo(link.href)"
+                class="block font-body text-body-md text-on-surface-variant px-4 py-3 rounded-xl
+                       hover:text-on-surface hover:bg-surface-low transition-all duration-150"
+                @click="!isCityPage ? ($event.preventDefault(), scrollTo(link.href)) : (isMobileMenuOpen = false)"
               >
                 {{ link.label }}
               </a>
             </li>
           </ul>
-          <div class="mt-4 flex flex-col gap-3 px-0">
+
+          <div class="mt-4">
             <UiButton
               href="#contact"
               class="w-full justify-center"
-              @click.prevent="scrollTo('#contact')"
+              @click="isMobileMenuOpen = false; !isCityPage && ($event.preventDefault(), scrollTo('#contact'))"
             >
               Demander une démo gratuite
             </UiButton>

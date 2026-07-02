@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useSeoMeta({
-  title:       'Conformité INAMI/RIZIV | NursyTarif',
-  description: 'NursyTarif garantit une conformité totale aux réglementations INAMI/RIZIV pour la facturation des soins infirmiers en Belgique.',
+  title:       'Conformité INAMI | NursyTarif',
+  description: 'NursyTarif garantit une conformité totale aux réglementations INAMI pour la facturation des soins infirmiers en Belgique.',
 })
 </script>
 
@@ -18,7 +18,7 @@ useSeoMeta({
             Retour à l'accueil
           </a>
           <h1 class="font-display font-bold text-headline-lg text-on-surface mb-2">
-            Conformité INAMI/RIZIV
+            Conformité INAMI
           </h1>
           <p class="font-body text-body-sm text-on-surface-variant">Dernière mise à jour : juillet 2026</p>
         </div>
@@ -26,7 +26,7 @@ useSeoMeta({
         <div class="font-body text-body-md text-on-surface space-y-5 leading-relaxed">
           <p>
             NursyTarif garantit une facturation 100% conforme aux dernières
-            nomenclatures et réglementations de l'INAMI/RIZIV pour les soins infirmiers
+            nomenclatures et réglementations de l'INAMI pour les soins infirmiers
             à domicile en Belgique.
           </p>
           <h2 class="font-display font-bold text-headline-sm text-on-surface mt-8 mb-3">Agrément et licences</h2>

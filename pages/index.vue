@@ -66,10 +66,10 @@ useHead({
               'Gestion tiers payant Belgique',
               'Bureau de tarification INAMI',
               'Application de tournée infirmière',
-              'Bureau de tarification RIZIV',
+              'Bureau de tarification INAMI',
             ],
             knowsAbout: [
-              'INAMI', 'RIZIV', 'Tiers payant', 'Facturation médicale',
+              'INAMI', 'Tiers payant', 'Facturation médicale',
               'Soins infirmiers', 'MyCareNet', 'eID Belgique',
             ],
             // Catalogue d'offres (pour les rich snippets)

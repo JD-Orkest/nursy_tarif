@@ -29,7 +29,7 @@ const benefits = [
   },
   {
     id: 'inami',
-    title: 'Conformité INAMI/RIZIV',
+    title: 'Conformité INAMI',
     description:
       'Une facturation toujours à jour avec les dernières réglementations légales belges pour une pratique sereine et sécurisée.',
     delay: 'delay-300',
@@ -192,13 +192,13 @@ const benefits = [
             <div class="flex items-start gap-4">
               <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
               </div>
               <div>
-                <h4 class="font-display font-bold text-sm text-white mb-1">Dashboard Financier Temps Réel</h4>
+                <h4 class="font-display font-bold text-sm text-white mb-1">Contact Direct & Joignable</h4>
                 <p class="font-body text-xs text-white/75 leading-relaxed">
-                  Visualisation claire de vos encaissements depuis l'app. Zéro calcul manuel requis.
+                  Via le chat de l’app Nursy ou par téléphone : une vraie personne vous répond. La communication, c’est la base d’une bonne équipe.
                 </p>
               </div>
             </div>

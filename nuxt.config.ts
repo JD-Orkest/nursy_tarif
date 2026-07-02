@@ -41,9 +41,8 @@ export default defineNuxtConfig({
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
       link: [
-        // Remplacez par votre favicon personnalisé dans /public/
-        // { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        // { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        // Favicon SVG — affiché dans l'onglet du navigateur
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'canonical', href: 'https://nursytarif.be' },
         // Déclaration du sitemap dans le <head> (découverte par les robots)
         { rel: 'sitemap', type: 'application/xml', href: 'https://nursytarif.be/sitemap.xml' },

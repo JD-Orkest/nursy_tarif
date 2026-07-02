@@ -32,7 +32,7 @@ useSeoMeta({
           <p>
             Dans le cadre de nos services de tarification, nous collectons les données
             strictement nécessaires : coordonnées professionnelles, données de facturation
-            INAMI/RIZIV et informations de contact.
+            INAMI et informations de contact.
           </p>
           <h2 class="font-display font-bold text-headline-sm text-on-surface mt-8 mb-3">Utilisation des données</h2>
           <p>
@@ -42,7 +42,7 @@ useSeoMeta({
           <h2 class="font-display font-bold text-headline-sm text-on-surface mt-8 mb-3">Conservation</h2>
           <p>
             Les données de facturation sont conservées pendant la durée légale requise
-            en Belgique (7 ans), conformément aux obligations INAMI/RIZIV.
+            en Belgique (7 ans), conformément aux obligations INAMI.
           </p>
           <h2 class="font-display font-bold text-headline-sm text-on-surface mt-8 mb-3">Contact</h2>
           <p>

@@ -164,7 +164,7 @@ const { el, isVisible } = useScrollReveal({ threshold: 0.06 })
                 type="text"
                 name="nom"
                 autocomplete="name"
-                placeholder="Dr. Jeanne Dupont"
+                placeholder="Jeanne Dupont"
                 class="input-quiet"
                 required
                 minlength="2"

@@ -7,9 +7,6 @@
 const currentYear = new Date().getFullYear()
 
 const footerLinks = [
-  { label: 'Politique de confidentialité', href: '/privacy' },
-  { label: 'Conditions d\'utilisation',     href: '/terms'   },
-  { label: 'Conformité',                    href: '/compliance' },
   { label: 'Contact',                       href: '#contact'  },
 ]
 
@@ -33,16 +30,19 @@ const scrollToContact = () => {
 
         <!-- ── Logo et signature ── -->
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 rounded-lg bg-cta-gradient flex items-center justify-center">
-            <svg class="w-3.5 h-3.5 text-white" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-              <path d="M11 3a1 1 0 10-2 0v4H5a1 1 0 100 2h4v4a1 1 0 102 0v-4h4a1 1 0 100-2h-4V3z" />
-            </svg>
-          </div>
+          <img
+            src="/logo.svg"
+            alt="NursyTarif logo"
+            class="w-7 h-7 rounded-lg"
+            width="28"
+            height="28"
+            loading="lazy"
+          />
           <span class="font-display font-bold text-base text-on-surface tracking-tight">NursyTarif</span>
         </div>
 
         <!-- ── Liens légaux ── -->
-        <nav aria-label="Liens légaux et de navigation du pied de page">
+        <!-- <nav aria-label="Liens légaux et de navigation du pied de page">
           <ul class="flex flex-wrap justify-center items-center gap-1" role="list">
             <li
               v-for="(link, index) in footerLinks"
@@ -59,16 +59,16 @@ const scrollToContact = () => {
                 @click.prevent="link.href === '#contact' ? scrollToContact() : undefined"
               >
                 {{ link.label }}
-              </a>
+              </a> -->
               <!-- Séparateur visuel (point, pas de ligne) -->
-              <span
+              <!-- <span
                 v-if="index < footerLinks.length - 1"
                 class="ml-1 text-outline-variant text-xs"
                 aria-hidden="true"
               >·</span>
             </li>
           </ul>
-        </nav>
+        </nav> -->
 
         <!-- ── Copyright ── -->
         <p class="font-body text-body-sm text-on-surface-variant text-center md:text-right">
@@ -82,7 +82,7 @@ const scrollToContact = () => {
       <div class="mt-6 pt-6 text-center" style="border-top: 1px solid rgba(189, 201, 202, 0.40);">
         <p class="font-body text-label-sm text-outline" style="letter-spacing: normal; text-transform: none; font-size: 0.7rem;">
           Service agréé de tarification pour infirmiers(ères) indépendants en Belgique.
-          Conformité INAMI/RIZIV. Données protégées conformément au RGPD (UE) 2016/679.
+          Conformité INAMI. Données protégées conformément au RGPD (UE) 2016/679.
         </p>
       </div>
     </div>

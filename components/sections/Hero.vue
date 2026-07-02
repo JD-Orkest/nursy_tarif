@@ -75,7 +75,7 @@ const scrollToServices = () => {
 
           <!-- Sous-titre — Plus Jakarta Sans, 18px -->
           <p class="font-body text-body-lg text-on-surface-variant mb-8 max-w-[480px] leading-relaxed">
-            Confiez votre facturation à des experts, profitez d'une application
+            Confiez votre facturation, profitez d'une application
             de pointe gratuite, et concentrez-vous sur ce qui compte vraiment :
             vos patients.
           </p>
@@ -87,16 +87,9 @@ const scrollToServices = () => {
               size="md"
               @click.prevent="scrollToContact"
             >
-              Demander une démo gratuite
+              Contactez-nous
             </UiButton>
-            <UiButton
-              href="#services"
-              variant="secondary"
-              size="md"
-              @click.prevent="scrollToServices"
-            >
-              Calculer mes gains
-            </UiButton>
+            
           </div>
 
           <!-- Indicateurs de confiance sous les CTAs -->
@@ -182,14 +175,14 @@ const scrollToServices = () => {
             </div>
           </div>
 
-          <!-- Badge flottant "FACTURATION RIZIV" — glassmorphisme -->
+          <!-- Badge flottant "FACTURATION INAMI" — glassmorphisme -->
           <div
             class="absolute -bottom-4 lg:bottom-6 -left-2 lg:-left-6
                    glass rounded-card shadow-glass
                    px-4 py-3 flex items-center gap-3
                    min-w-[200px] animate-float"
             role="status"
-            aria-label="Facturation RIZIV 100% acceptée"
+            aria-label="Facturation INAMI 100% acceptée"
           >
             <!-- Icône checkmark vert -->
             <div class="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
@@ -201,7 +194,7 @@ const scrollToServices = () => {
             <!-- Texte du badge -->
             <div>
               <p class="font-display font-bold text-sm text-on-surface uppercase tracking-wide">
-                FACTURATION RIZIV
+                FACTURATION INAMI
               </p>
               <p class="font-body text-xs font-semibold mt-0.5" style="color: #15919B;">
                 100% Acceptée
