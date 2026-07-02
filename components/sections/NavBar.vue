@@ -20,12 +20,14 @@ const homeLinks = [
   { label: 'Tarifs',          href: '#services'   },
   { label: 'Fonctionnalités', href: '#avantages'  },
   { label: 'SEO Offert',      href: '#visibilite' },
+  { label: 'Zones',           href: '#zones'      },
   { label: 'Contact',         href: '#contact'    },
 ]
 const cityLinks = [
   { label: 'Tarifs',          href: '/#services'   },
   { label: 'Fonctionnalités', href: '/#avantages'  },
   { label: 'SEO Offert',      href: '/#visibilite' },
+  { label: 'Zones',          href: '/#zones'       },
   { label: 'Contact',         href: '/#contact'    },
 ]
 const navLinks = computed(() => isCityPage.value ? cityLinks : homeLinks)
