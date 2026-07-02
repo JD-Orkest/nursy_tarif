@@ -1,33 +1,28 @@
 # ╔══════════════════════════════════════════════════════════════════════════╗
 # ║  NursyTarif — Déploiement automatique sur GitHub Pages                  ║
 # ║  Déclenché sur chaque push sur la branche main                          ║
+# ║  Stratégie : push du build vers la branche gh-pages                     ║
 # ║  URL de production : https://jd-orkest.github.io/nursy_tarif            ║
 # ╚══════════════════════════════════════════════════════════════════════════╝
 
 name: 🚀 Déploiement GitHub Pages
 
 on:
-  # Déploiement automatique à chaque push sur main
   push:
     branches: [main]
-  # Déploiement manuel depuis l'interface GitHub (onglet Actions)
   workflow_dispatch:
 
-# Permissions nécessaires pour l'action deploy-pages
+# contents:write est nécessaire pour pousser sur la branche gh-pages
 permissions:
-  contents: read
-  pages:    write
-  id-token: write
+  contents: write
 
-# Un seul déploiement à la fois — évite les conflits
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
-  # ── Job 1 : Build ──────────────────────────────────────────────────────
-  build:
-    name: Build Nuxt SSG
+  build-and-deploy:
+    name: Build Nuxt SSG → gh-pages
     runs-on: ubuntu-latest
 
     steps:
@@ -43,30 +38,18 @@ jobs:
       - name: 📦 Installer les dépendances
         run: npm ci
 
-      # nuxt generate produit le site statique dans .output/public/
-      # NUXT_APP_BASE_URL est obligatoire pour le sous-répertoire /nursy_tarif/
+      # nuxt generate → .output/public/
+      # NUXT_APP_BASE_URL obligatoire pour le sous-répertoire /nursy_tarif/
       - name: 🏗️ Générer le site statique
         run: npm run generate
         env:
           NUXT_APP_BASE_URL: /nursy_tarif/
 
-      # Upload l'artifact pour l'action deploy-pages
-      - name: 📤 Upload de l'artifact GitHub Pages
-        uses: actions/upload-pages-artifact@v3
+      # Pousse .output/public sur la branche gh-pages
+      # peaceiris/actions-gh-pages ajoute automatiquement .nojekyll
+      - name: 🌐 Pousser sur la branche gh-pages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: .output/public
-
-  # ── Job 2 : Deploy ─────────────────────────────────────────────────────
-  deploy:
-    name: Deploy sur GitHub Pages
-    needs: build
-    runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
-      - name: 🌐 Déployer sur GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: .output/public
+          force_orphan: true
