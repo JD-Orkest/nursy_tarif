@@ -92,16 +92,3 @@ const isInternal = computed(() =>
     <slot />
   </button>
 </template>
-    :disabled="!href && loading"
-  >
-    <!-- Spinner de chargement -->
-    <span
-      v-if="loading"
-      class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"
-      aria-hidden="true"
-    />
-
-    <!-- Contenu du bouton via slot -->
-    <slot />
-  </component>
-</template>
