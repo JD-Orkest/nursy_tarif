@@ -10,16 +10,20 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
   ],
 
-  // ─── Polices Google — préchargées pour un CLS à zéro ────────────────────
+  // ─── Polices Google — optimisées pour PageSpeed ───────────────────────────────
+  // - subset 'latin' uniquement (site belge francophone, pas besoin du cyrillique)
+  // - display 'optional' : polices hors chemin critique (pas de blocage du rendu)
+  // - weights réduits au strict nécessaire
   googleFonts: {
     families: {
-      Manrope: [600, 700, 800],
-      'Plus Jakarta Sans': [400, 500, 600],
+      Manrope:            [700, 800],
+      'Plus Jakarta Sans': [400, 600],
     },
-    display: 'swap',
-    preload: true,
+    subsets:    ['latin'],
+    display:    'optional',
+    preload:    true,
     preconnect: true,
-    prefetch: false,
+    prefetch:   false,
   },
 
   // ─── Application ─────────────────────────────────────────────────────────

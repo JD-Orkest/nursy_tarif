@@ -37,7 +37,17 @@ const cityLabel = computed(() =>
   (route.params.ville as string ?? '').replace(/-/g, ' '),
 )
 
-const handleScroll = () => { isScrolled.value = window.scrollY > 24 }
+// requestAnimationFrame : évite le forced layout reflow en synchronisant la
+// lecture de window.scrollY avec le cycle de rendu du navigateur
+let rafPending = false
+const handleScroll = () => {
+  if (rafPending) return
+  rafPending = true
+  requestAnimationFrame(() => {
+    isScrolled.value = window.scrollY > 24
+    rafPending = false
+  })
+}
 onMounted(()  => window.addEventListener('scroll', handleScroll, { passive: true }))
 onUnmounted(() => window.removeEventListener('scroll', handleScroll))
 

@@ -1,0 +1,26 @@
+# Cloudflare Pages / Netlify custom headers
+# GitHub Pages ignore ce fichier (pas de support des headers personnalisés)
+# Ce fichier entre en vigueur si le projet migre vers Cloudflare Pages ou Netlify.
+
+# ── Assets Nuxt hashés (immutables — nom inclut le hash de contenu) ────────
+/_nuxt/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Polices woff2 (immutables) ────────────────────────────────────────────
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+# ── Pages HTML — validité courte (contenu mis à jour) ────────────────────
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Page racine ───────────────────────────────────────────────────────────
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+# ── Sitemap & robots ──────────────────────────────────────────────────────
+/sitemap.xml
+  Cache-Control: public, max-age=3600
+
+/robots.txt
+  Cache-Control: public, max-age=86400
