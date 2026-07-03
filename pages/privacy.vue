@@ -11,12 +11,12 @@ useSeoMeta({
     <main class="min-h-screen pt-24 pb-20 bg-surface-lowest">
       <div class="container-content max-w-narrow">
         <div class="mb-8">
-          <a href="/" class="chip-primary inline-flex items-center gap-2 mb-6 hover:opacity-80 transition-opacity">
+          <NuxtLink to="/" class="chip-primary inline-flex items-center gap-2 mb-6 hover:opacity-80 transition-opacity">
             <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
             </svg>
             Retour à l'accueil
-          </a>
+          </NuxtLink>
           <h1 class="font-display font-bold text-headline-lg text-on-surface mb-2">
             Politique de confidentialité
           </h1>

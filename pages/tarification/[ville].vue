@@ -312,9 +312,9 @@ const neighborCities = computed<City[]>(() => {
             <!-- Fil d'Ariane visible (+ SEO) -->
             <nav aria-label="Fil d'Ariane" class="mb-6">
               <ol class="flex items-center gap-2 font-body text-body-sm text-on-surface-variant" role="list">
-                <li><a href="/" class="hover:text-primary transition-colors">NursyTarif</a></li>
+                <li><NuxtLink to="/" class="hover:text-primary transition-colors">NursyTarif</NuxtLink></li>
                 <li aria-hidden="true" class="text-outline-variant">›</li>
-                <li><a href="/#zones" class="hover:text-primary transition-colors">Zones</a></li>
+                <li><NuxtLink to="/#zones" class="hover:text-primary transition-colors">Zones</NuxtLink></li>
                 <li aria-hidden="true" class="text-outline-variant">›</li>
                 <li class="text-on-surface font-medium" aria-current="page">{{ cityName }}</li>
               </ol>
@@ -456,10 +456,10 @@ const neighborCities = computed<City[]>(() => {
 
           <!-- Grille des communes voisines -->
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-            <a
+            <NuxtLink
               v-for="neighbor in neighborCities"
               :key="neighbor.slug"
-              :href="`/tarification/${neighbor.slug}`"
+              :to="`/tarification/${neighbor.slug}`"
               class="group flex flex-col gap-1.5
                      bg-surface-lowest rounded-card p-4
                      shadow-level-1
@@ -496,7 +496,7 @@ const neighborCities = computed<City[]>(() => {
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
               </div>
-            </a>
+            </NuxtLink>
           </div>
 
         </div>

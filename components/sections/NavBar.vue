@@ -69,12 +69,29 @@ const scrollTo = (href: string) => {
     >
       <div class="flex items-center justify-between h-16 lg:h-18">
 
-        <!-- ── Logo — scroll doux (homepage) | lien retour à / (pages ville) ── -->
-        <a
-          :href="isCityPage ? '/' : '#accueil'"
+        <!-- ── Logo — NuxtLink vers / (pages ville) | ancre #accueil (homepage) ── -->
+        <!-- Ville : NuxtLink to="/" respecte le baseURL GitHub Pages -->
+        <!-- Homepage : <a> + scroll doux via @click.prevent -->
+        <NuxtLink
+          v-if="isCityPage"
+          to="/"
           class="flex items-center gap-2 group"
-          :aria-label="isCityPage ? 'NursyTarif — Retour à l\'accueil' : 'NursyTarif — Haut de page'"
-          @click="!isCityPage ? ($event.preventDefault(), scrollTo('#accueil')) : undefined"
+          aria-label="NursyTarif — Retour à l'accueil"
+        >
+          <img
+            :src="logoUrl"
+            alt="NursyTarif logo"
+            class="w-8 h-8 rounded-lg shadow-level-1 group-hover:shadow-level-2 transition-shadow duration-250"
+            width="32" height="32" loading="eager"
+          />
+          <span class="font-display font-bold text-lg text-on-surface tracking-tight">NursyTarif</span>
+        </NuxtLink>
+        <a
+          v-else
+          href="#accueil"
+          class="flex items-center gap-2 group"
+          aria-label="NursyTarif — Haut de page"
+          @click.prevent="scrollTo('#accueil')"
         >
           <img
             :src="logoUrl"
@@ -91,11 +108,11 @@ const scrollTo = (href: string) => {
           aria-label="Fil d’ariane"
           class="hidden md:flex items-center gap-1.5 font-body text-body-sm text-on-surface-variant"
         >
-          <a href="/" class="hover:text-primary transition-colors duration-150">Accueil</a>
+          <NuxtLink to="/" class="hover:text-primary transition-colors duration-150">Accueil</NuxtLink>
           <svg class="w-3 h-3 text-outline-variant flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
-          <a href="/#zones" class="hover:text-primary transition-colors duration-150">Zones</a>
+          <NuxtLink to="/#zones" class="hover:text-primary transition-colors duration-150">Zones</NuxtLink>
           <svg class="w-3 h-3 text-outline-variant flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
@@ -118,13 +135,13 @@ const scrollTo = (href: string) => {
         </ul>
         <ul v-else class="hidden lg:flex items-center gap-1" role="list">
           <li v-for="link in navLinks" :key="link.href">
-            <a
-              :href="link.href"
+            <NuxtLink
+              :to="link.href"
               class="font-body text-body-sm text-on-surface-variant px-4 py-2 rounded-xl
                      hover:text-on-surface hover:bg-surface-low transition-all duration-150"
             >
               {{ link.label }}
-            </a>
+            </NuxtLink>
           </li>
         </ul>
 
@@ -178,7 +195,7 @@ const scrollTo = (href: string) => {
             v-if="isCityPage"
             class="flex items-center gap-1.5 px-4 py-2 mb-1 font-body text-body-sm text-on-surface-variant"
           >
-            <a href="/" class="hover:text-primary transition-colors">Accueil</a>
+            <NuxtLink to="/" class="hover:text-primary transition-colors">Accueil</NuxtLink>
             <svg class="w-3 h-3 text-outline-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
             </svg>

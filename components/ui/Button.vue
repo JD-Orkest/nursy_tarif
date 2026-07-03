@@ -48,21 +48,50 @@ const classes = computed(() => {
   return [base, variants[props.variant], sizes[props.size]].join(' ')
 })
 
-// Style inline pour le bouton secondaire (opacity sur la couleur secondaire)
-const inlineStyle = computed(() =>
-  props.variant === 'secondary'
-    ? { backgroundColor: 'rgba(173, 216, 220, 0.28)' }
-    : {},
+// Lien interne (commence par /) → NuxtLink (respecte le baseURL GitHub Pages)
+// Lien externe (http/https) ou ancre (#) → <a> standard
+// Pas de href → <button>
+const isInternal = computed(() =>
+  !!props.href && props.href.startsWith('/') && !props.href.startsWith('//')
 )
 </script>
 
 <template>
-  <!-- Rendu conditionnel : <a> si href fourni, sinon <button> -->
-  <component
-    :is="href ? 'a' : 'button'"
-    v-bind="href ? { href, target } : { type }"
+  <!-- Lien interne : NuxtLink gère automatiquement le baseURL -->
+  <NuxtLink
+    v-if="isInternal"
+    :to="href!"
     :class="classes"
     :style="inlineStyle"
+  >
+    <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+    <slot />
+  </NuxtLink>
+
+  <!-- Lien externe ou ancre : <a> standard -->
+  <a
+    v-else-if="href"
+    :href="href"
+    :target="target"
+    :class="classes"
+    :style="inlineStyle"
+  >
+    <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+    <slot />
+  </a>
+
+  <!-- Bouton natif -->
+  <button
+    v-else
+    :type="type"
+    :class="classes"
+    :style="inlineStyle"
+    :disabled="loading"
+  >
+    <span v-if="loading" class="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+    <slot />
+  </button>
+</template>
     :disabled="!href && loading"
   >
     <!-- Spinner de chargement -->

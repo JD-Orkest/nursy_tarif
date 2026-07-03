@@ -142,7 +142,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
           <h3>{{ province }}</h3>
           <ul>
             <li v-for="city in citiesByProvince[province]" :key="city.slug">
-              <a :href="`/tarification/${city.slug}`">{{ city.name }}</a>
+              <NuxtLink :to="`/tarification/${city.slug}`">{{ city.name }}</NuxtLink>
             </li>
           </ul>
         </template>
@@ -310,8 +310,8 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
                   :key="city.slug"
                   class="group"
                 >
-                  <a
-                    :href="`/tarification/${city.slug}`"
+                  <NuxtLink
+                    :to="`/tarification/${city.slug}`"
                     class="flex items-center justify-between
                            px-3 py-2.5 rounded-xl
                            hover:bg-surface-tonal
@@ -358,7 +358,7 @@ onUnmounted(() => window.removeEventListener('keydown', onKeydown))
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                       </svg>
                     </div>
-                  </a>
+                  </NuxtLink>
                 </li>
               </ul>
             </div>
